@@ -37,7 +37,7 @@ const app = express();
 
 // --- CORS ---
 app.use(cors({
-  origin: ["http://localhost:5173", "http://91.99.139.75", "https://liebenly.com"],
+  origin: ["http://localhost:5173", "http://91.99.139.75", "https://liebenly.com" , "https://libenly.vercel.app"],
   credentials: true
 }));
 

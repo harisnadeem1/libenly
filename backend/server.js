@@ -18,7 +18,7 @@ const server = http.createServer(app);
 
 // Allowed origins (SAFE DEV + FUTURE READY)
 const allowedOrigins = [
-  "http://localhost:5173" , "https://libenly.vercel.app/"
+  "http://localhost:5173" , "https://libenly.vercel.app"
   // later add:
   // "https://your-frontend-domain.com"
 ];
