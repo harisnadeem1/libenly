@@ -6,7 +6,9 @@ const { Server } = require("socket.io");
 const { releaseExpiredLocks } = require("./src/utils/lockCleanup");
 
 dotenv.config();
-require("./src/cron/dailyJob"); // Loads the daily rotation scheduler
+
+// Cron jobs
+require("./src/cron/dailyJob");
 require("./src/cron/notificationJob");
 
 const PORT = process.env.PORT || 5000;
@@ -14,21 +16,38 @@ const PORT = process.env.PORT || 5000;
 // Create HTTP server
 const server = http.createServer(app);
 
+// Allowed origins (SAFE DEV + FUTURE READY)
+const allowedOrigins = [
+  "http://localhost:5173"
+  // later add:
+  // "https://your-frontend-domain.com"
+];
+
 // Initialize Socket.IO
 const io = new Server(server, {
   cors: {
-    origin: ["*","http://localhost:5173", "http://91.99.139.75","https://liebenly.com"], // ✅ Add your frontend production domain here later
+    origin: (origin, callback) => {
+      // Allow server-to-server / mobile apps / postman
+      if (!origin) return callback(null, true);
+
+      // Allow localhost during development
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      return callback(null, true); // TEMP SAFE MODE (won't block frontend later)
+    },
     methods: ["GET", "POST"],
     credentials: true
-  }
-  // transports: ["websocket"]
+  },
+  transports: ["websocket", "polling"]
 });
 
-// Global access for emitting from controllers
+// Global access for controllers
 global.io = io;
 
 // Auto-release expired locks
-setInterval(releaseExpiredLocks, 60 * 2000);
+setInterval(releaseExpiredLocks, 2 * 60 * 1000);
 
 // Socket.IO logic
 io.on("connection", (socket) => {
@@ -44,7 +63,7 @@ io.on("connection", (socket) => {
   });
 });
 
-
+// Start server (Render compatible)
 server.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
 });
