@@ -1,5 +1,6 @@
 const db = require('../config/db');
-const openai = require('../config/openai');
+// const openai = require('../config/openai');
+const openai = require('../config/ai');
 const ChatterModel = require('../models/chatterModel');
 
 async function handleLikeResponse(likeId, senderId, girlId) {
