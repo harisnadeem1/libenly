@@ -371,38 +371,49 @@ const coinPackages = [
   };
 
   // UPDATED: Handle buy now with Shopify integration
+  //active it when need to connnect to shopify
+  // const handleBuyNow = () => {
+  //   setShowPurchaseModal(false);
+    
+  //   if (!user?.id && !user?.email) {
+  //     toast({
+  //       title: "Login Required",
+  //       description: "Please log in to purchase coins.",
+  //       variant: "destructive"
+  //     });
+  //     return;
+  //   }
+
+  //   // Choose between Storefront API or direct cart redirect
+  //   // For more control, use createShopifyCheckout
+  //   // For simplicity, use redirectToShopifyCart
+    
+  //   // Option 1: Using Storefront API (recommended)
+  //   //createShopifyCheckout(selectedPackage);
+    
+  //   // Option 2: Direct cart redirect (uncomment to use instead)
+  //   // Fire Facebook Purchase Event
+  // if (window.fbq && selectedPackage) {
+  //   window.fbq('track', 'Purchase', {
+  //     value: parseFloat(selectedPackage.price.replace('€', '').replace('$', '')),
+  //     currency: 'USD', // or 'USD' if you're using dollars
+  //     package_name: selectedPackage.name,
+  //     coins: selectedPackage.coins + selectedPackage.bonus
+  //   });
+  // }
+  //   redirectToShopifyCart(selectedPackage);
+  // };
+
+
   const handleBuyNow = () => {
-    setShowPurchaseModal(false);
-    
-    if (!user?.id && !user?.email) {
-      toast({
-        title: "Login Required",
-        description: "Please log in to purchase coins.",
-        variant: "destructive"
-      });
-      return;
-    }
+  setShowPurchaseModal(false);
 
-    // Choose between Storefront API or direct cart redirect
-    // For more control, use createShopifyCheckout
-    // For simplicity, use redirectToShopifyCart
-    
-    // Option 1: Using Storefront API (recommended)
-    //createShopifyCheckout(selectedPackage);
-    
-    // Option 2: Direct cart redirect (uncomment to use instead)
-    // Fire Facebook Purchase Event
-  if (window.fbq && selectedPackage) {
-    window.fbq('track', 'Purchase', {
-      value: parseFloat(selectedPackage.price.replace('€', '').replace('$', '')),
-      currency: 'USD', // or 'USD' if you're using dollars
-      package_name: selectedPackage.name,
-      coins: selectedPackage.coins + selectedPackage.bonus
-    });
-  }
-    redirectToShopifyCart(selectedPackage);
-  };
-
+  toast({
+    title: "Demo Mode",
+    description:
+      "Payments are currently disabled. This platform is running in showcase/demo mode only.",
+  });
+};
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-purple-50">
       <Helmet>
